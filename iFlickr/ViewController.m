@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "FlickrClient.h"
 
 @interface ViewController ()
 
@@ -22,6 +23,21 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)getPhotosPressed:(UIBarButtonItem *)sender {
+    FCLocation location;
+    location.latitude = 59.0;
+    location.longitude = 39.0;
+    float radius = 1;
+    FlickrClient *client = [FlickrClient new];
+    [client getPhotosWithLocation:location distance:radius completion:^(id data, BOOL success) {
+        if (success) {
+            
+        } else {
+            NSLog(@"Request photos finished with error %@", data);
+        }
+    }];
 }
 
 @end
