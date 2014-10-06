@@ -27,13 +27,13 @@
 
 - (IBAction)getPhotosPressed:(UIBarButtonItem *)sender {
     FCLocation location;
-    location.latitude = 59.0;
-    location.longitude = 39.0;
-    float radius = 1;
+    location.latitude = 59.936426;
+    location.longitude = 30.310750;
+    float radius = 0.1;
     FlickrClient *client = [FlickrClient new];
     [client getPhotosWithLocation:location distance:radius completion:^(id data, BOOL success) {
         if (success) {
-            
+            NSLog(@"ok");
         } else {
             NSLog(@"Request photos finished with error %@", data);
         }

@@ -26,15 +26,25 @@
                                  @"lat" : [NSNumber numberWithFloat:location.latitude],
                                  @"lon" : [NSNumber numberWithFloat:location.longitude],
                                  @"radius" : [NSNumber numberWithFloat:radius],
-                                 @"extras" : @"geo,",
-                                 @"format" : @"json"};
+                                 @"extras" : @"geo",
+                                 @"format" : @"json",
+                                 @"nojsoncallback" : @"1"};
     [self GET:@""
    parameters:parameters
       success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
+          completion([self p_parsePhotosWithData:responseObject[@"photos"][@"photo"]], YES);
+    }
+      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+          completion(error, NO);
     }];
+}
+
+- (NSArray *)p_parsePhotosWithData:(id)data {
+    NSMutableArray *photos = [NSMutableArray new];
+    [data enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL *stop) {
+        [photos addObject:obj];
+    }];
+    return photos;
 }
 
 @end
