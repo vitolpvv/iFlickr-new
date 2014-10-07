@@ -11,12 +11,20 @@
 typedef void(^FlickrClientCompletion)(id data, BOOL success);
 
 typedef struct FCLocation {
-    float latitude;
-    float longitude;
+    double latitude;
+    double longitude;
 } FCLocation;
+
+typedef struct FCRegion {
+    double minimum_latitude;
+    double minimum_longitude;
+    double maximum_latitude;
+    double maximum_longitude;
+} FCRegion;
 
 @interface FlickrClient : AFHTTPRequestOperationManager
 
-- (void)getPhotosWithLocation:(FCLocation)location distance:(float)radius completion:(FlickrClientCompletion)completion;
+- (void)getPhotosInfoWithLocation:(FCLocation)location distance:(double)radius completion:(FlickrClientCompletion)completion;
+- (void)getPhotosInfoWithRegion:(FCRegion)region completion:(FlickrClientCompletion)completion;
 
 @end

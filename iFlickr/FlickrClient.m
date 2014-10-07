@@ -19,7 +19,7 @@
     return self;
 }
 
-- (void)getPhotosWithLocation:(FCLocation)location distance:(float)radius completion:(FlickrClientCompletion)completion {
+- (void)getPhotosInfoWithLocation:(FCLocation)location distance:(double)radius completion:(FlickrClientCompletion)completion {
     NSDictionary *parameters = @{@"method" : @"flickr.photos.search",
                                  @"api_key" : @"2b2c9f8abc28afe8d7749aee246d951c",
                                  @"has_geo" : @"1",
@@ -31,6 +31,24 @@
                                  @"nojsoncallback" : @"1",
                                  @"content_type" : @"1",
                                  @"tags" : @"beauty"};
+    [self p_getPhotoWithParameters:parameters completion:completion];
+}
+
+- (void)getPhotosInfoWithRegion:(FCRegion)region completion:(FlickrClientCompletion)completion {
+    NSString *bbox = [NSString stringWithFormat:@"%f,%f,%f,%f", region.minimum_longitude, region.minimum_latitude, region.maximum_longitude, region.maximum_latitude];
+    NSDictionary *parameters = @{@"method" : @"flickr.photos.search",
+                                 @"api_key" : @"2b2c9f8abc28afe8d7749aee246d951c",
+                                 @"has_geo" : @"1",
+                                 @"bbox" : bbox,
+                                 @"extras" : @"geo,url_s,url_q,url_o,",
+                                 @"format" : @"json",
+                                 @"nojsoncallback" : @"1",
+                                 @"content_type" : @"1",
+                                 @"tags" : @"beauty"};
+    [self p_getPhotoWithParameters:parameters completion:completion];
+}
+
+- (void)p_getPhotoWithParameters:(NSDictionary *)parameters completion:(FlickrClientCompletion)completion {
     [self GET:@""
    parameters:parameters
       success:^(AFHTTPRequestOperation *operation, id responseObject) {
