@@ -26,17 +26,23 @@
                                  @"lat" : [NSNumber numberWithFloat:location.latitude],
                                  @"lon" : [NSNumber numberWithFloat:location.longitude],
                                  @"radius" : [NSNumber numberWithFloat:radius],
-                                 @"extras" : @"geo",
+                                 @"extras" : @"geo,url_s,url_q,url_o,",
                                  @"format" : @"json",
-                                 @"nojsoncallback" : @"1"};
+                                 @"nojsoncallback" : @"1",
+                                 @"content_type" : @"1",
+                                 @"tags" : @"beauty"};
     [self GET:@""
    parameters:parameters
       success:^(AFHTTPRequestOperation *operation, id responseObject) {
-          completion([self p_parsePhotosWithData:responseObject[@"photos"][@"photo"]], YES);
-    }
+          if ([responseObject[@"stat"] isEqualToString:@"fail"]) {
+              completion(responseObject, NO);
+          } else {
+              completion([self p_parsePhotosWithData:responseObject[@"photos"][@"photo"]], YES);
+          }
+      }
       failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-          completion(error, NO);
-    }];
+          completion([self p_parseError:error], NO);
+      }];
 }
 
 - (NSArray *)p_parsePhotosWithData:(id)data {
@@ -45,6 +51,11 @@
         [photos addObject:obj];
     }];
     return photos;
+}
+
+- (NSDictionary *)p_parseError:(NSError *)error {
+    return [NSDictionary dictionaryWithObjects:@[@"fail", [NSNumber numberWithInteger:error.code], error.localizedDescription]
+                                       forKeys:@[@"stat", @"code", @"message"]];
 }
 
 @end

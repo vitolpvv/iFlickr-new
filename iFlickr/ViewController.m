@@ -29,7 +29,7 @@
     FCLocation location;
     location.latitude = 59.936426;
     location.longitude = 30.310750;
-    float radius = 0.1;
+    float radius = 2;
     FlickrClient *client = [FlickrClient new];
     [client getPhotosWithLocation:location distance:radius completion:^(id data, BOOL success) {
         if (success) {
