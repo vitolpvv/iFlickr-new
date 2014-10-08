@@ -25,7 +25,7 @@
                     <navigationItem key="navigationItem" id="PTx-zM-LIg">
                         <barButtonItem key="rightBarButtonItem" title="Flickr" id="DB2-eE-87r">
                             <connections>
-                                <action selector="getPhotosInfoPressed:" destination="BYZ-38-t0r" id="dbG-09-9aP"/>
+                                <action selector="getPhotosInfoPressed:" destination="BYZ-38-t0r" id="7qo-Mi-Mxw"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

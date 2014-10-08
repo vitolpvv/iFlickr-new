@@ -19,19 +19,19 @@
     return self;
 }
 
-- (void)getPhotosInfoWithLocation:(FCLocation)location distance:(double)radius completion:(FlickrClientCompletion)completion {
+- (void)getPhotosInfoWithLocation:(FCLocation)location distance:(double)radius completion:(FlickrClientCompletion)completionBlock {
     NSDictionary *parameters = @{@"method" : @"flickr.photos.search",
                                  @"api_key" : @"2b2c9f8abc28afe8d7749aee246d951c",
                                  @"has_geo" : @"1",
                                  @"lat" : [NSNumber numberWithFloat:location.latitude],
                                  @"lon" : [NSNumber numberWithFloat:location.longitude],
                                  @"radius" : [NSNumber numberWithFloat:radius],
-                                 @"extras" : @"geo,url_s,url_q,url_o,",
+                                 @"extras" : @"geo, url_l, url_q, url_o, date_taken, owner_name",
                                  @"format" : @"json",
                                  @"nojsoncallback" : @"1",
                                  @"content_type" : @"1",
-                                 @"tags" : @"beauty"};
-    [self p_getPhotoWithParameters:parameters completion:completion];
+                                 @"tags" : @"cat"};
+    [self p_getPhotoInfoWithParameters:parameters completion:completionBlock];
 }
 
 - (void)getPhotosInfoWithRegion:(FCRegion)region completion:(FlickrClientCompletion)completion {
@@ -40,35 +40,24 @@
                                  @"api_key" : @"2b2c9f8abc28afe8d7749aee246d951c",
                                  @"has_geo" : @"1",
                                  @"bbox" : bbox,
-                                 @"extras" : @"geo,url_s,url_q,url_o,",
+                                 @"extras" : @"geo, url_l, url_q, url_o, date_taken, owner_name",
                                  @"format" : @"json",
                                  @"nojsoncallback" : @"1",
                                  @"content_type" : @"1",
-                                 @"tags" : @"beauty"};
-    [self p_getPhotoWithParameters:parameters completion:completion];
+                                 @"tags" : @"cat"};
+    [self p_getPhotoInfoWithParameters:parameters completion:completion];
 }
 
-- (void)p_getPhotoWithParameters:(NSDictionary *)parameters completion:(FlickrClientCompletion)completion {
+- (void)p_getPhotoInfoWithParameters:(NSDictionary *)parameters completion:(FlickrClientCompletion)completion {
+    FlickrClientCompletion copiedComplition = [completion copy];
     [self GET:@""
    parameters:parameters
       success:^(AFHTTPRequestOperation *operation, id responseObject) {
-          if ([responseObject[@"stat"] isEqualToString:@"fail"]) {
-              completion(responseObject, NO);
-          } else {
-              completion([self p_parsePhotosWithData:responseObject[@"photos"][@"photo"]], YES);
-          }
+          copiedComplition(responseObject, [responseObject[@"stat"] isEqualToString:@"ok"]);
       }
       failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-          completion([self p_parseError:error], NO);
+          copiedComplition([self p_parseError:error], NO);
       }];
-}
-
-- (NSArray *)p_parsePhotosWithData:(id)data {
-    NSMutableArray *photos = [NSMutableArray new];
-    [data enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL *stop) {
-        [photos addObject:obj];
-    }];
-    return photos;
 }
 
 - (NSDictionary *)p_parseError:(NSError *)error {

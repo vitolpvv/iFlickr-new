@@ -8,10 +8,14 @@
 
 #import "ViewController.h"
 #import "FlickrClient.h"
+#import "FlickrPhotosParser.h"
+#import "Photo.h"
+@import CoreLocation;
 
-@interface ViewController () <MKMapViewDelegate>
+@interface ViewController () <MKMapViewDelegate, CLLocationManagerDelegate>
 
-@property (nonatomic,strong) NSArray *photos;
+//@property (nonatomic,strong) NSArray *photos;
+@property (nonatomic,strong) CLLocationManager *locationManager;
 
 @end
 
@@ -19,26 +23,56 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.locationManager = [CLLocationManager new];
+    self.locationManager.delegate = self;
+    self.locationManager.distanceFilter = kCLDistanceFilterNone;
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
+    [self.locationManager startUpdatingLocation];
+    
     self.mapView.delegate = self;
-    MKCoordinateRegion region = MKCoordinateRegionMake(CLLocationCoordinate2DMake(59.926711, 30.317589), MKCoordinateSpanMake(.02, .02));
-    [self.mapView setRegion:region animated:YES];
-    // Do any additional setup after loading the view, typically from a nib.
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+    [self p_updeateMapViewWhithLocation:[locations lastObject]];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+    
 }
 
 - (IBAction)getPhotosInfoPressed:(UIBarButtonItem *)sender {
-//    FCLocation location = {59.936426,30.310750};
-//    location.latitude = 59.936426;
-//    location.longitude = 30.310750;
-//    float radius = 2;
     FCRegion region = [self p_makeFCRegionFromMapViewRegion:self.mapView.region];
     FlickrClient *client = [FlickrClient new];
     [client getPhotosInfoWithRegion:region completion:^(id data, BOOL success) {
         if (success) {
+            [self p_parsePhotosInfoWithData:data[@"photos"][@"photo"]];
             [self.mapView removeAnnotations:self.mapView.annotations];
         } else {
             NSLog(@"Request photos finished with error %@", data);
         }
     }];
+}
+
+- (void)p_parsePhotosInfoWithData:(id)data {
+    dispatch_queue_t backgroundQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
+    dispatch_async(backgroundQueue, ^{
+        NSArray *parsedPhotos = [[FlickrPhotosParser new] photosWithInfo:data];
+        dispatch_queue_t mainQueue = dispatch_get_main_queue();
+        dispatch_async(mainQueue, ^{
+            [self p_addPhotosOnMapView:parsedPhotos];
+        });
+    });
+}
+
+- (void)p_addPhotosOnMapView:(NSArray *)photos {
+    
+}
+
+- (void)p_updeateMapViewWhithLocation:(CLLocation *)location {    
+    MKCoordinateRegion region = MKCoordinateRegionMake(location.coordinate, MKCoordinateSpanMake(.02, .02));
+    [self.mapView setRegion:region animated:YES];
+    [self.locationManager stopUpdatingLocation];
 }
 
 - (FCRegion)p_makeFCRegionFromMapViewRegion:(MKCoordinateRegion)mapRegion {

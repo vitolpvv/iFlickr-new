@@ -24,7 +24,7 @@ typedef struct FCRegion {
 
 @interface FlickrClient : AFHTTPRequestOperationManager
 
-- (void)getPhotosInfoWithLocation:(FCLocation)location distance:(double)radius completion:(FlickrClientCompletion)completion;
+- (void)getPhotosInfoWithLocation:(FCLocation)location distance:(double)radius completion:(FlickrClientCompletion)completionBlock;
 - (void)getPhotosInfoWithRegion:(FCRegion)region completion:(FlickrClientCompletion)completion;
 
 @end
