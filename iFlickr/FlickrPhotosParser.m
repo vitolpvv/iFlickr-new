@@ -7,11 +7,19 @@
 //
 
 #import "FlickrPhotosParser.h"
+#import "Photo.h"
 
 @implementation FlickrPhotosParser
 
 - (NSArray *)photosWithInfo:(NSArray *)info {
-    return nil;
+    NSMutableArray *photosArrey = [NSMutableArray new];
+    for (NSDictionary *anInfo in info) {
+        Photo *photo = [Photo photoWithData:anInfo];
+        if (photo) {
+            [photosArrey addObject:photo];
+        }
+    }
+    return photosArrey;
 }
 
 @end

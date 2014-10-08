@@ -19,7 +19,7 @@
         newPhoto.urlImageLarge = data[@"url_l"];
         newPhoto.urlImageOriginal = data[@"url_o"];
         newPhoto.urlImageSquare = data[@"url_q"];
-        newPhoto.coordinates = CLLocationCoordinate2DMake([data[@"latitude"] doubleValue], [data[@"longitude"] doubleValue]);
+        newPhoto.coordinate = CLLocationCoordinate2DMake([data[@"latitude"] doubleValue], [data[@"longitude"] doubleValue]);
         return newPhoto;
     }   
     return nil;

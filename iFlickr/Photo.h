@@ -17,7 +17,7 @@
 @property (nonatomic, strong) NSString *urlImageSquare;
 @property (nonatomic, strong) NSString *urlImageOriginal;
 @property (nonatomic, strong) NSString *urlImageLarge;
-@property (nonatomic) CLLocationCoordinate2D coordinates;
+@property (nonatomic) CLLocationCoordinate2D coordinate;
 
 +(instancetype)photoWithData:(NSDictionary *)data;
 

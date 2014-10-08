@@ -10,6 +10,7 @@
 		780768FBE2AA4675D9CFECDF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F29DE3B74DF5B15BEEE5F38 /* libPods.a */; };
 		841ED79319E4BD4100A9EF83 /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = 841ED79219E4BD4100A9EF83 /* Photo.m */; };
 		841ED79619E4C5CA00A9EF83 /* FlickrPhotosParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 841ED79519E4C5CA00A9EF83 /* FlickrPhotosParser.m */; };
+		841ED79919E4D69C00A9EF83 /* PhotoAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 841ED79819E4D69C00A9EF83 /* PhotoAnnotation.m */; };
 		843CB01D19E33B110030DE2C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 843CB01C19E33B110030DE2C /* main.m */; };
 		843CB02019E33B110030DE2C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 843CB01F19E33B110030DE2C /* AppDelegate.m */; };
 		843CB02319E33B110030DE2C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 843CB02219E33B110030DE2C /* ViewController.m */; };
@@ -38,6 +39,8 @@
 		841ED79219E4BD4100A9EF83 /* Photo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Photo.m; sourceTree = "<group>"; };
 		841ED79419E4C5CA00A9EF83 /* FlickrPhotosParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlickrPhotosParser.h; sourceTree = "<group>"; };
 		841ED79519E4C5CA00A9EF83 /* FlickrPhotosParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlickrPhotosParser.m; sourceTree = "<group>"; };
+		841ED79719E4D69C00A9EF83 /* PhotoAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoAnnotation.h; sourceTree = "<group>"; };
+		841ED79819E4D69C00A9EF83 /* PhotoAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoAnnotation.m; sourceTree = "<group>"; };
 		843CB01719E33B110030DE2C /* iFlickr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iFlickr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		843CB01B19E33B110030DE2C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		843CB01C19E33B110030DE2C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -117,6 +120,8 @@
 				843CB01A19E33B110030DE2C /* Supporting Files */,
 				84458FAE19E33DD000B3D020 /* FlickrClient.h */,
 				84458FAF19E33DD000B3D020 /* FlickrClient.m */,
+				841ED79719E4D69C00A9EF83 /* PhotoAnnotation.h */,
+				841ED79819E4D69C00A9EF83 /* PhotoAnnotation.m */,
 			);
 			path = iFlickr;
 			sourceTree = "<group>";
@@ -310,6 +315,7 @@
 				843CB02319E33B110030DE2C /* ViewController.m in Sources */,
 				843CB02019E33B110030DE2C /* AppDelegate.m in Sources */,
 				843CB01D19E33B110030DE2C /* main.m in Sources */,
+				841ED79919E4D69C00A9EF83 /* PhotoAnnotation.m in Sources */,
 				84458FB019E33DD000B3D020 /* FlickrClient.m in Sources */,
 				841ED79619E4C5CA00A9EF83 /* FlickrPhotosParser.m in Sources */,
 			);

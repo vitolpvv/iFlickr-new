@@ -10,11 +10,12 @@
 #import "FlickrClient.h"
 #import "FlickrPhotosParser.h"
 #import "Photo.h"
+#import "PhotoAnnotation.h"
 @import CoreLocation;
 
 @interface ViewController () <MKMapViewDelegate, CLLocationManagerDelegate>
 
-//@property (nonatomic,strong) NSArray *photos;
+@property (nonatomic,strong) NSArray *photos;
 @property (nonatomic,strong) CLLocationManager *locationManager;
 
 @end
@@ -54,6 +55,25 @@
     }];
 }
 
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
+{
+    //if it is not our office model class annotation just return nil
+    //to show annotaion of default presentation style
+    if (![annotation isKindOfClass:[PhotoAnnotation class]]){
+        return nil;
+    }
+    NSString *identifier = @"PhotoAnnotationIdentifier";
+    MKAnnotationView *annotationView = [mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
+    if (!annotationView){
+        annotationView = [[MKAnnotationView alloc]initWithAnnotation:annotation
+                                                     reuseIdentifier:identifier];
+    }
+//    annotationView.image = [UIImage imageWithData:[[NSData dataWithContentsOfURL:[NSURL URLWithString:[self.photos[0]]]]];
+    annotationView.canShowCallout = YES;
+    
+    return annotationView;
+}
+
 - (void)p_parsePhotosInfoWithData:(id)data {
     dispatch_queue_t backgroundQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
     dispatch_async(backgroundQueue, ^{
@@ -66,7 +86,11 @@
 }
 
 - (void)p_addPhotosOnMapView:(NSArray *)photos {
-    
+    self.photos = photos;
+    [self.mapView removeAnnotations:self.mapView.annotations];
+    [self.mapView addAnnotations:self.photos];
+//    [self.mapView showAnnotations:self.photos animated:YES];
+    NSLog(@"parsing complete");
 }
 
 - (void)p_updeateMapViewWhithLocation:(CLLocation *)location {    
