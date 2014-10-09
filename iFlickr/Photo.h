@@ -9,11 +9,11 @@
 #import <Foundation/Foundation.h>
 @import MapKit;
 
-@interface Photo : NSObject
+@interface Photo : NSObject <MKAnnotation>
 
 @property (nonatomic, strong) NSString *owner;
 @property (nonatomic, strong) NSString *dateTaken;
-@property (nonatomic, strong) NSString *title;
+@property (nonatomic, copy) NSString *title;
 @property (nonatomic, strong) NSString *urlImageSquare;
 @property (nonatomic, strong) NSString *urlImageOriginal;
 @property (nonatomic, strong) NSString *urlImageLarge;
