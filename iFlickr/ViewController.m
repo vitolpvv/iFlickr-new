@@ -41,7 +41,7 @@
             [self p_parsePhotosInfoWithData:data[@"photos"][@"photo"]];
             [self.mapView removeAnnotations:self.mapView.annotations];
         } else {
-            [WToast showWithText:[NSString stringWithFormat:@"%@ Try again.", data[@"message"]]];
+            [WToast showWithText:[NSString stringWithFormat:@"%@. Try again.", data[@"message"]]];
             NSLog(@"Request photos finished with error %@", data);
         }
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
