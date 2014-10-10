@@ -27,7 +27,7 @@
     [super viewDidLoad];
     self.mapView.delegate = self;
     CLLocationCoordinate2D center = CLLocationCoordinate2DMake(59.937460,30.313840);
-    MKCoordinateSpan span = MKCoordinateSpanMake(2, 2);
+    MKCoordinateSpan span = MKCoordinateSpanMake(1, 1);
     self.mapView.region = [self.mapView regionThatFits:MKCoordinateRegionMake(center, span)];
     
 }
@@ -108,7 +108,6 @@
     self.photos = photos;
     [self.mapView removeAnnotations:self.mapView.annotations];
     [self.mapView addAnnotations:self.photos];
-//    [self.mapView showAnnotations:self.photos animated:YES];
     NSLog(@"parsing complete");
 }
 

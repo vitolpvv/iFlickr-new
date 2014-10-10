@@ -25,9 +25,4 @@
     return nil;
 }
 
-//- (CLLocationCoordinate2D)coordinate
-//{
-//    return self.coordinates;
-//}
-
 @end
