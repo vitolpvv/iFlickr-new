@@ -109,13 +109,13 @@
     FCRegion region;
     region.minimum_latitude = center.latitude - span.latitudeDelta / 2;
     region.minimum_longitude = center.longitude - span.longitudeDelta / 2;
-    if (region.minimum_longitude < 0) {
-        region.minimum_longitude += 180;
+    if (region.minimum_longitude < -180) {
+        region.minimum_longitude += 360;
     }
     region.maximum_latitude = center.latitude + span.latitudeDelta / 2;
     region.maximum_longitude = center.longitude + span.longitudeDelta / 2;
     if (region.maximum_longitude > 180) {
-        region.maximum_longitude -= 180;
+        region.maximum_longitude -= 360;
     }
     
     return region;
