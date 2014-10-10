@@ -32,11 +32,39 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="mapView" destination="8PM-n6-j9J" id="k3J-Ih-RJL"/>
+                        <segue destination="MGR-Yj-8g1" kind="show" identifier="ShowImage" id="vnH-8y-Mdl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1098" y="317"/>
+            <point key="canvasLocation" x="1096" y="317"/>
+        </scene>
+        <!--Show Picture View Controller-->
+        <scene sceneID="sqL-OE-keK">
+            <objects>
+                <viewController id="MGR-Yj-8g1" customClass="ShowPictureViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="cGL-ZF-EXg"/>
+                        <viewControllerLayoutGuide type="bottom" id="jCE-QQ-vrV"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="1eP-sd-kiX">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j9Y-4J-dJp">
+                                <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+                    <connections>
+                        <outlet property="imageView" destination="j9Y-4J-dJp" id="yah-dx-mLb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1kC-FP-aXo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1529" y="317"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="6Gi-GP-S4m">

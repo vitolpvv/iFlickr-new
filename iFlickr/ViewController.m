@@ -10,13 +10,12 @@
 #import "FlickrClient.h"
 #import "FlickrPhotosParser.h"
 #import "Photo.h"
-#import "PhotoAnnotation.h"
-@import CoreLocation;
+#import "ShowPictureViewController.h"
 
 @interface ViewController () <MKMapViewDelegate, CLLocationManagerDelegate>
 
 @property (nonatomic,strong) NSArray *photos;
-@property (nonatomic,strong) CLLocationManager *locationManager;
+@property (weak, nonatomic) Photo *currentPhoto;
 
 @end
 
@@ -24,22 +23,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.locationManager = [CLLocationManager new];
-    self.locationManager.delegate = self;
-    self.locationManager.distanceFilter = kCLDistanceFilterNone;
-    self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
-    [self.locationManager startUpdatingLocation];
-    
     self.mapView.delegate = self;
-}
-
-- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
-    [self p_updeateMapViewWhithLocation:[locations lastObject]];
-}
-
-- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
-    
 }
 
 - (IBAction)getPhotosInfoPressed:(UIBarButtonItem *)sender {
@@ -57,8 +41,6 @@
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
 {
-    //if it is not our office model class annotation just return nil
-    //to show annotaion of default presentation style
     if (![annotation isKindOfClass:[Photo class]]){
         return nil;
     }
@@ -75,19 +57,31 @@
 }
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
+    __block MKAnnotationView *annotationView = view;
+    __block Photo *photo = view.annotation;
+    self.currentPhoto = photo;
     if (!view.leftCalloutAccessoryView) {
-        __block MKAnnotationView *annotationView = view;
-        __block Photo *photo = view.annotation;
-        dispatch_queue_t backgroundQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
-        dispatch_async(backgroundQueue, ^{
-            UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:photo.urlImageSquare]]];
-            dispatch_queue_t mainQueue = dispatch_get_main_queue();
-            dispatch_async(mainQueue, ^{
-                UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-                [annotationView setLeftCalloutAccessoryView:imageView];
-            });
-        });
+        
+        UIButton *showImageButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [showImageButton setFrame:CGRectMake(0, 0, 50, 20)];
+        [showImageButton setTitle:@"Show" forState:UIControlStateNormal];
+        [showImageButton addTarget:self action:@selector(p_addOpenFotoButton) forControlEvents:UIControlEventTouchUpInside];
+        
+        [annotationView setLeftCalloutAccessoryView:showImageButton];
     }
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.destinationViewController isKindOfClass:[ShowPictureViewController class]]) {
+        ShowPictureViewController *controller = segue.destinationViewController;
+        NSURL *url = [NSURL URLWithString:self.currentPhoto.urlImageOriginal ? self.currentPhoto.urlImageOriginal : self.currentPhoto.urlImageLarge];
+        controller.imageUrl = url;
+        controller.title = self.currentPhoto.title;
+    }
+}
+
+- (void)p_addOpenFotoButton {
+    [self performSegueWithIdentifier:@"ShowImage" sender:self];
 }
 
 - (void)p_parsePhotosInfoWithData:(id)data {
@@ -109,26 +103,21 @@
     NSLog(@"parsing complete");
 }
 
-- (void)p_updeateMapViewWhithLocation:(CLLocation *)location {    
-    MKCoordinateRegion region = MKCoordinateRegionMake(location.coordinate, MKCoordinateSpanMake(.02, .02));
-    [self.mapView setRegion:region animated:YES];
-    [self.locationManager stopUpdatingLocation];
-}
-
 - (FCRegion)p_makeFCRegionFromMapViewRegion:(MKCoordinateRegion)mapRegion {
     CLLocationCoordinate2D center = mapRegion.center;
     MKCoordinateSpan span = mapRegion.span;
     FCRegion region;
-    region.minimum_latitude = center.latitude - span.latitudeDelta;
-    region.minimum_longitude = center.longitude - span.longitudeDelta;
+    region.minimum_latitude = center.latitude - span.latitudeDelta / 2;
+    region.minimum_longitude = center.longitude - span.longitudeDelta / 2;
     if (region.minimum_longitude < 0) {
         region.minimum_longitude += 180;
     }
-    region.maximum_latitude = center.latitude + span.latitudeDelta;
-    region.maximum_longitude = center.longitude + span.longitudeDelta;
+    region.maximum_latitude = center.latitude + span.latitudeDelta / 2;
+    region.maximum_longitude = center.longitude + span.longitudeDelta / 2;
     if (region.maximum_longitude > 180) {
         region.maximum_longitude -= 180;
     }
+    
     return region;
 }
 
