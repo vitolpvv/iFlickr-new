@@ -11,6 +11,8 @@
 #import "FlickrPhotosParser.h"
 #import "Photo.h"
 #import "ShowPictureViewController.h"
+#import "WToast.h"
+#import <MBProgressHUD/MBProgressHUD.h>
 
 @interface ViewController () <MKMapViewDelegate, CLLocationManagerDelegate>
 
@@ -24,9 +26,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.mapView.delegate = self;
+    CLLocationCoordinate2D center = CLLocationCoordinate2DMake(59.937460,30.313840);
+    MKCoordinateSpan span = MKCoordinateSpanMake(2, 2);
+    self.mapView.region = [self.mapView regionThatFits:MKCoordinateRegionMake(center, span)];
+    
 }
 
 - (IBAction)getPhotosInfoPressed:(UIBarButtonItem *)sender {
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     FCRegion region = [self p_makeFCRegionFromMapViewRegion:self.mapView.region];
     FlickrClient *client = [FlickrClient new];
     [client getPhotosInfoWithRegion:region completion:^(id data, BOOL success) {
@@ -34,8 +41,10 @@
             [self p_parsePhotosInfoWithData:data[@"photos"][@"photo"]];
             [self.mapView removeAnnotations:self.mapView.annotations];
         } else {
+            [WToast showWithText:[NSString stringWithFormat:@"%@ Try again.", data[@"message"]]];
             NSLog(@"Request photos finished with error %@", data);
         }
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     }];
 }
 

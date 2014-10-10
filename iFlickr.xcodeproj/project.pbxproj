@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		780768FBE2AA4675D9CFECDF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F29DE3B74DF5B15BEEE5F38 /* libPods.a */; };
 		8416D91519E74F5E0039042B /* ShowPictureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8416D91419E74F5E0039042B /* ShowPictureViewController.m */; };
+		841A6BD519E7F92600298214 /* WToast.m in Sources */ = {isa = PBXBuildFile; fileRef = 841A6BD419E7F92600298214 /* WToast.m */; };
 		841ED79319E4BD4100A9EF83 /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = 841ED79219E4BD4100A9EF83 /* Photo.m */; };
 		841ED79619E4C5CA00A9EF83 /* FlickrPhotosParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 841ED79519E4C5CA00A9EF83 /* FlickrPhotosParser.m */; };
 		843CB01D19E33B110030DE2C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 843CB01C19E33B110030DE2C /* main.m */; };
@@ -37,6 +38,8 @@
 		7F29DE3B74DF5B15BEEE5F38 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8416D91319E74F5E0039042B /* ShowPictureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowPictureViewController.h; sourceTree = "<group>"; };
 		8416D91419E74F5E0039042B /* ShowPictureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowPictureViewController.m; sourceTree = "<group>"; };
+		841A6BD319E7F92600298214 /* WToast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WToast.h; sourceTree = "<group>"; };
+		841A6BD419E7F92600298214 /* WToast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WToast.m; sourceTree = "<group>"; };
 		841ED79119E4BD4000A9EF83 /* Photo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Photo.h; sourceTree = "<group>"; };
 		841ED79219E4BD4100A9EF83 /* Photo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Photo.m; sourceTree = "<group>"; };
 		841ED79419E4C5CA00A9EF83 /* FlickrPhotosParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlickrPhotosParser.h; sourceTree = "<group>"; };
@@ -83,6 +86,53 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		841A6BD219E7F92600298214 /* Narmo */ = {
+			isa = PBXGroup;
+			children = (
+				841A6BD319E7F92600298214 /* WToast.h */,
+				841A6BD419E7F92600298214 /* WToast.m */,
+			);
+			path = Narmo;
+			sourceTree = SOURCE_ROOT;
+		};
+		841A6BD619E800EE00298214 /* Flickr */ = {
+			isa = PBXGroup;
+			children = (
+				841ED79419E4C5CA00A9EF83 /* FlickrPhotosParser.h */,
+				841ED79519E4C5CA00A9EF83 /* FlickrPhotosParser.m */,
+				84458FAE19E33DD000B3D020 /* FlickrClient.h */,
+				84458FAF19E33DD000B3D020 /* FlickrClient.m */,
+			);
+			name = Flickr;
+			sourceTree = "<group>";
+		};
+		841A6BD719E8011E00298214 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				841ED79119E4BD4000A9EF83 /* Photo.h */,
+				841ED79219E4BD4100A9EF83 /* Photo.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		841A6BD819E8014700298214 /* MainViewController */ = {
+			isa = PBXGroup;
+			children = (
+				843CB02119E33B110030DE2C /* ViewController.h */,
+				843CB02219E33B110030DE2C /* ViewController.m */,
+			);
+			name = MainViewController;
+			sourceTree = "<group>";
+		};
+		841A6BD919E8016D00298214 /* ShowPictureViewController */ = {
+			isa = PBXGroup;
+			children = (
+				8416D91319E74F5E0039042B /* ShowPictureViewController.h */,
+				8416D91419E74F5E0039042B /* ShowPictureViewController.m */,
+			);
+			name = ShowPictureViewController;
+			sourceTree = "<group>";
+		};
 		843CB00E19E33B110030DE2C = {
 			isa = PBXGroup;
 			children = (
@@ -106,22 +156,17 @@
 		843CB01919E33B110030DE2C /* iFlickr */ = {
 			isa = PBXGroup;
 			children = (
-				841ED79119E4BD4000A9EF83 /* Photo.h */,
-				841ED79219E4BD4100A9EF83 /* Photo.m */,
-				841ED79419E4C5CA00A9EF83 /* FlickrPhotosParser.h */,
-				841ED79519E4C5CA00A9EF83 /* FlickrPhotosParser.m */,
 				843CB01E19E33B110030DE2C /* AppDelegate.h */,
 				843CB01F19E33B110030DE2C /* AppDelegate.m */,
-				843CB02119E33B110030DE2C /* ViewController.h */,
-				843CB02219E33B110030DE2C /* ViewController.m */,
+				841A6BD219E7F92600298214 /* Narmo */,
+				841A6BD719E8011E00298214 /* Model */,
+				841A6BD619E800EE00298214 /* Flickr */,
+				841A6BD819E8014700298214 /* MainViewController */,
+				841A6BD919E8016D00298214 /* ShowPictureViewController */,
 				843CB02419E33B110030DE2C /* Main.storyboard */,
 				843CB02719E33B110030DE2C /* Images.xcassets */,
 				843CB02919E33B110030DE2C /* LaunchScreen.xib */,
 				843CB01A19E33B110030DE2C /* Supporting Files */,
-				84458FAE19E33DD000B3D020 /* FlickrClient.h */,
-				84458FAF19E33DD000B3D020 /* FlickrClient.m */,
-				8416D91319E74F5E0039042B /* ShowPictureViewController.h */,
-				8416D91419E74F5E0039042B /* ShowPictureViewController.m */,
 			);
 			path = iFlickr;
 			sourceTree = "<group>";
@@ -316,6 +361,7 @@
 				8416D91519E74F5E0039042B /* ShowPictureViewController.m in Sources */,
 				843CB02019E33B110030DE2C /* AppDelegate.m in Sources */,
 				843CB01D19E33B110030DE2C /* main.m in Sources */,
+				841A6BD519E7F92600298214 /* WToast.m in Sources */,
 				84458FB019E33DD000B3D020 /* FlickrClient.m in Sources */,
 				841ED79619E4C5CA00A9EF83 /* FlickrPhotosParser.m in Sources */,
 			);
